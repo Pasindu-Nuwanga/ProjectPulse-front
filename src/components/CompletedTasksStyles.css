@@ -1,0 +1,106 @@
+.project-completed{
+    margin: 4rem 6rem;
+}
+
+.project-completed h1{
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.tasks{
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.task-card{
+    width: 32%;
+    text-align: start;
+    box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 7px;
+    cursor: pointer;
+    padding: 1rem 1rem;
+}
+
+.task-card h4{
+    font-size: 1.3rem;
+    padding: 0.9rem 0.3rem 0;
+}
+
+.task-card p{
+    font-size: 1rem;
+    color: rgb(81, 81, 81);
+}
+
+.task-image{
+    height: 200px;
+    overflow: hidden;
+    border-radius: 7px;
+}
+
+.task-image img{
+    height: 100%;
+    width: 100%;
+    transition: all 0.3s ease-in-out;
+    border-radius: 7px;
+}
+
+.task-image:hover img{
+    transform: scale(1.5);
+}
+
+@media screen and (max-width:600px) {
+    
+    .project-completed{
+        margin: 1rem 1.5rem;
+    }
+    
+    .project-completed h1{
+        font-size: 1rem;
+        text-align: center;
+        margin-bottom: 25px;
+    }
+    
+    .tasks{
+        flex-direction: column;
+    }
+    
+    .task-card{
+        width: 80%;
+        margin-bottom: 1.5rem;
+        text-align: start;
+        box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.2);
+        border-radius: 3.5px;
+        cursor: pointer;
+        padding: 0.5rem 0.5rem;
+        margin-left: 50%;
+        transform: translate(-50%);
+    }
+    
+    .task-card h4{
+        font-size: 0.8rem;
+        padding: 0.9rem 0.3rem 0;
+    }
+
+    .task-card p{
+        font-size: 0.7rem;
+    }
+    
+    .task-image{
+        height: 150px;
+        overflow: hidden;
+        border-radius: 3.5px;
+    }
+    
+    .task-image img{
+        height: 100%;
+        width: 100%;
+        transition: all 0.3s ease-in-out;
+        border-radius: 7px;
+    }
+    
+    .task-image:hover img{
+        transform: scale(1.5);
+    }
+}
