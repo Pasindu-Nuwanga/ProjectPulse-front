@@ -30,7 +30,7 @@
   }
   
   .row {
-    width: 300px;
+    width: 55%;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
@@ -39,7 +39,7 @@
   }
   
   .row h2 {
-    margin-bottom: 0px;
+    margin-bottom: 10px;
     color: #ffffff;
     font-size: 24px;
   }
@@ -47,10 +47,13 @@
   .row hr {
     color: #ffffff;
     height: 2px;
+    padding-bottom: 20px;
   }
   
   .form-group {
     margin-bottom: 20px;
+    padding-bottom: 10px;
+    width: 100%;
   }
   
   .form-control {
@@ -75,6 +78,7 @@
     font-size: 20px;
     font-weight: 500;
     cursor: pointer;
+    width: 80%;
   }
   
   .btn-primary:hover {

@@ -2,3 +2,9 @@
     color: white;
     font-size: 14px;
 }
+
+@media screen and (max-width: 600px) {
+    .user-profile{
+        font-size: 12px;
+    }
+}

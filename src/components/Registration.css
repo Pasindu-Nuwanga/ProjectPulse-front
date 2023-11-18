@@ -13,6 +13,7 @@
     justify-content: center;
     align-items: center;
     height: 670px;
+    border-radius: 20px;
     
   }
   
@@ -28,6 +29,7 @@
     justify-content: center;
     align-items: center;
     height: 670px;
+    border-radius: 20px;
   }
   
   .card {
@@ -51,7 +53,7 @@
   }
   
   .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 5px;
   }
   
   .form-control {

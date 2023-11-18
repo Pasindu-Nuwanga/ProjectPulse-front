@@ -3,8 +3,18 @@ import Footer from "./Footer";
 import InspectionRequestForm from "./InspectionRequestForm";
 import InspectionRequestTable from "./InspectionRequestTable";
 import Open from "./Open";
+import { useState } from "react";
+import "./Inspection.css";
+import InspectionResultForm from "./InspectionResultForm";
 
 function Inspection({roleName, username}) {
+
+  const [activeComponent, setActiveComponent] = useState('inspectionRequestForm');
+  
+    const handleNavigation = (component) => {
+      setActiveComponent(component);
+    };
+
     return (
       <>
        <Navbar roleName={roleName} username={username}/>
@@ -15,11 +25,37 @@ function Inspection({roleName, username}) {
        title = "Inspections"
        />
 
-       <InspectionRequestForm/>
+      <div>
+        <div className="inspection-container">
+          <div className="inspection-buttons">
+            <button
+              className={`inspection-button ${activeComponent === 'inspectionRequestForm' ? 'active' : ''}`}
+              onClick={() => handleNavigation('inspectionRequestForm')}
+            >
+              Request Form
+            </button>
+            <button
+              className={`inspection-button ${activeComponent === 'inspectionRequestTable' ? 'active' : ''}`}
+              onClick={() => handleNavigation('inspectionRequestTable')}
+            >
+              Request Table
+            </button>
+            <button
+              className={`inspection-button ${activeComponent === 'inspectionResultForm' ? 'active' : ''}`}
+              onClick={() => handleNavigation('inspectionResultForm')}
+            >
+              Result Form
+            </button>
+          </div>
+  
+          {activeComponent === 'inspectionRequestForm' && <InspectionRequestForm />}
+          {activeComponent === 'inspectionRequestTable' && <InspectionRequestTable />}
+          {activeComponent === 'inspectionResultForm' && <InspectionResultForm/>}
+        </div>
+      </div>
+
 
        <Footer/>
-
-       <InspectionRequestTable/>
        
       </>
 
@@ -27,3 +63,10 @@ function Inspection({roleName, username}) {
   }
   
   export default Inspection;
+
+  
+    
+
+      
+  
+  

@@ -2,7 +2,6 @@
 import { Component } from "react";
 import "./NavbarStyle.css";
 import { NavbarItems } from "./NavbarItems";
-import { NavItem } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import UserProfile from "./UserProfile";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +12,7 @@ class Navbar extends Component{
     state = {clicked: false};
     handleClick = (event) => {
       event.preventDefault();
-      window.location.href = '/login';
+      //window.location.href = '/login';
         this.setState({ clicked: !this.state.clicked });
     }
 
@@ -43,9 +42,16 @@ class Navbar extends Component{
                       <UserProfile roleName={this.props.roleName} username={this.props.username} />
                     </div>
                   </div>
-                  <button className="Logout-btn" onClick={() => {localStorage.clear(); navigate("/login")}}>Log out</button>
+                  <button className="Logout-btn" 
+                   onClick= {()=> {
+                    const confirmLogout = window.confirm("Are you sure you want to log out?");
+                    if (confirmLogout) {
+                      localStorage.clear(); window.location.href = '/login'
+                    }
+                   }}>
+                    Log out
+                    </button>
                 </div>
-
 
                 {/* Resposive navbar */}
                 <div className="menu-icons" onClick={

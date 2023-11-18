@@ -1,8 +1,6 @@
-import { resolvePath } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "./Footer";
 import Open from "./Open";
-import PhaseForm from "./PhaseForm";
 
 function Home({roleName, username, projectName}) {
     return (
@@ -16,8 +14,9 @@ function Home({roleName, username, projectName}) {
        text = "TO"
        project = {projectName}
        />
+
        <Footer/>
-       <PhaseForm/>
+       
       </>
 
     );

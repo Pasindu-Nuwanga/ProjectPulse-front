@@ -1,0 +1,56 @@
+/* document Panel Styles */
+.document-container {
+    width: 100%;
+    height: auto;
+    padding-top: 20px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  }
+  
+  .document-header {
+    text-align: center;
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  .head{
+    font-weight: bold;
+    font-size: 32px;
+  }
+  
+  .document-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .document-button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-size: 16px;
+    background-color: #62A404;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .document-button:hover {
+    background-color: black;
+  }
+  
+  .document-component {
+    margin-top: 20px;
+  }
+
+  .document-button.active {
+    background-color: black;
+  }
+  
+  /* Add more specific styles for ProjectForm and Registration components if needed */
+  

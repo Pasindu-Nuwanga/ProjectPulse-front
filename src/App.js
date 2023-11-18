@@ -10,6 +10,7 @@ import Registration from "./components/Registration";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import { useState, useEffect } from "react";
 import NotAllowed from "./components/NotAllowed";
+import Admin from "./components/Admin";
 
 function App() {
 
@@ -38,14 +39,14 @@ function App() {
     <div>
       <BrowserRouter>
          <Routes>
-            <Route path="/home" element={role === 1 || role === 2 || role === 3 || role === 4 || role === 5 ? <Home role={role} roleName={roleName} username={username} projectName={projectName}/>:<NotAllowed/>}/>
+            <Route path="/admin" element={role === 1 ? <Admin role={role} roleName={roleName} username={username}/>:<NotAllowed/>}/>
+            <Route path="/home" element={role === 2 || role === 3 || role === 4 || role === 5 ? <Home role={role} roleName={roleName} username={username} projectName={projectName}/>:<NotAllowed/>}/>
             <Route path="/about" element={role === 1 || role === 2 || role === 3 || role === 4 || role === 5 ? <About role={role} roleName={roleName} username={username}/>:<NotAllowed/>}/>
             <Route path="/team" element={role === 1 || role === 2 || role === 3 || role === 4 || role === 5 ? <Team role={role} roleName={roleName} username={username}/>:<NotAllowed/>}/>
             <Route path="/project" element={role === 1 || role === 2 || role === 3 || role === 4 || role === 5 ? <Project role={role} roleName={roleName} username={username}/>:<NotAllowed/>}/>
             <Route path="/document" element={role === 1 || role === 2 || role === 3 || role === 4 || role === 5 ? <Document role={role} roleName={roleName} username={username}/>:<NotAllowed/>}/>
             <Route path="/inspection" element={role === 1 || role === 2 || role === 3 || role === 4 || role === 5 ? <Inspection role={role} roleName={roleName} username={username}/>:<NotAllowed/>}/>
             <Route path="/contact" element={role === 1 || role === 2 || role === 3 || role === 4 || role === 5 ? <Contacts role={role} roleName={roleName} username={username}/>:<NotAllowed/>}/>
-            <Route path="/registration" element={<Registration/>}/>
             <Route path="/login" element={<Login setRole={setRole} setRoleName={setRoleName} setUsername={setUsername} 
                                                  setProjectId={setProjectId} setProjectName={setProjectName}/>}/>
 

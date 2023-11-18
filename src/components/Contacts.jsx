@@ -1,7 +1,9 @@
 import Navbar from "../components/Navbar";
 import Footer from "./Footer";
+import InspectionResultForm from "./InspectionResultForm";
+import InspectionResultTable from "./InspectionResultTable";
 import Open from "./Open";
-import ProjectForm from "./ProjectForm";
+
 
 function Contacts({roleName, username}) {
     return (
@@ -14,8 +16,10 @@ function Contacts({roleName, username}) {
        title = "Contact Us"
        />
 
+       <InspectionResultTable/>
+
        <Footer/>
-       <ProjectForm/>
+       
       </>
 
     );

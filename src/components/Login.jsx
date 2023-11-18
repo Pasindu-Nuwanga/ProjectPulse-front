@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
-function Login({setRole, setRoleName, setUsername, setProjectId, setProjectName}) {
+function Login({ setRole, setRoleName, setUsername, setProjectId, setProjectName }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -14,31 +14,46 @@ function Login({setRole, setRoleName, setUsername, setProjectId, setProjectName}
     event.preventDefault();
     setIsLoading(true);
 
-    try {
+     try {
       const response = await axios.post("http://localhost:8090/api/v1/employee/login", {
         email: email,
         password: password,
       });
 
       if (response.data) {
-        // Assuming the backend sends the user object upon successful login
-        const userData = response.data
+        const userData = response.data;
 
         console.log("This is the user data", userData);
-        setRole(userData.roles.roleId)
-        setRoleName(userData.roles.roleName)
-        setUsername(userData.firstName + " " + userData.lastName)
-        setProjectId(userData.projects.projectId)
-        setProjectName(userData.projects.projectName)
+        setRole(userData.roles.roleId);
+        setRoleName(userData.roles.roleName);
+        setUsername(userData.firstName + " " + userData.lastName);
+        setProjectId(userData.projects.projectId);
+        setProjectName(userData.projects.projectName);
 
         setError("");
-        navigate("/home");
+
+        // Redirect the user after successful login
+        if (userData.roles.roleId === 1) {
+          navigate("/admin");
+        } else {
+          navigate("/home");
+        }
       } else {
-        setError("Incorrect Email and Password!");
+        // Log the response for debugging
+        console.log("Error response:", response);
       }
     } catch (err) {
-      setError("An error occurred while processing your request.");
-      console.error(err);
+      if (err.response && err.response.status === 500 && err.response.data.message === "Email and password are required.") {
+        setError("Please fill in both email and password fields.");
+      }else if (err.response && err.response.status === 500 && err.response.data.message === "User not found.") {
+        setError("User not found. Please check your username.");
+      } else if (err.response && err.response.status === 500 && err.response.data.message === "Incorrect password.") {
+        setError("Incorrect password. Please check your password.");
+      }else {
+        // Handle other types of errors
+        setError("An error occurred while processing your request.");
+        console.error(err);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -60,7 +75,7 @@ function Login({setRole, setRoleName, setUsername, setProjectId, setProjectName}
                 type="text"
                 className="form-control"
                 id="email"
-                placeholder="Enter email"
+                placeholder="Enter username"
                 value={email}
                 onChange={(event) => {
                   setEmail(event.target.value);

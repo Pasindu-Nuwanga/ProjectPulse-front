@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import "./FileUpload.css";
 
 const FileUpload = ({projectId}) => {
   const [file, setFile] = useState(null);
@@ -54,30 +55,41 @@ const FileUpload = ({projectId}) => {
   };
 
   return (
-    <div>
-      <form onSubmit={onFormSubmit}>
-        <div className="mb-3">
-          <label htmlFor="file" className="form-label">Choose File</label>
-          <input type="file" className="form-control" id="file" onChange={onFileChange} />
-        </div>
-        <div className="mb-3">
+    <div className="file-upload-container">
+      <h2>Upload Files</h2>
+
+      {uploadMessage && <div className="alert-alert-info mt-2">{uploadMessage}</div>}
+      
+      <form onSubmit={onFormSubmit} className="file-upload-form">
+      <div className="mb-3">
           <label>Select Phase:</label>
           <select
             value={selectedPhase}
             onChange={(e) => setSelectedPhase(e.target.value)}
             required
+            className="form-select" 
           >
-            <option value="" disabled>Select a phase</option>
-            {phases.map(phase => (
+            <option value="" disabled>
+              Select a phase
+            </option>
+            {phases.map((phase) => (
               <option key={phase.phaseId} value={phase.phaseName}>
                 {phase.phaseName}
               </option>
             ))}
           </select>
         </div>
-        <button type="submit" className="btn btn-primary">Upload</button>
+        <div className="mb-3">
+          <label htmlFor="file" className="form-label">
+            Choose File
+          </label>
+          <input type="file" className="form-control" id="file" onChange={onFileChange} />
+        </div>
+        
+        <button type="submit" className="btn btn-primary">
+          Upload
+        </button>
       </form>
-      {uploadMessage && <div className="alert alert-info mt-2">{uploadMessage}</div>}
     </div>
   );
 };

@@ -1,0 +1,150 @@
+/* InspectionRequestForm Styles */
+.inspection-form-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding-bottom: 20px;
+    padding-top: 20px;
+  }
+  
+  .inspection-form {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .inspection-form-heading {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 16px;
+  }
+  
+  .form-label {
+    margin-bottom: 8px;
+    color: #333;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .form-select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .form-control-file {
+    margin-bottom: 16px;
+  }
+  
+  button {
+    width: 50%;
+    padding: 10px;
+    background-color: black;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    align-content: center;
+    font-weight: 500;
+    margin: auto;
+  }
+  
+  button:hover {
+    background-color: #62A404;
+    font-weight: 700;
+  }
+
+  .inspection-request-success-message {
+    color: #000000;
+    background-color: #00ffe5;
+    border-color: #c3e6cb;
+    padding: 8px;
+    border-radius: 4px;
+    margin-top: 10px;
+  }
+
+  @media screen and (max-width: 600px) {
+
+    .inspection-form-container {
+        max-width: 300px;
+        margin: 0 auto;
+        padding-bottom: 10px;
+      }
+      
+      .inspection-form {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      
+      .inspection-form-heading {
+        font-size: 20px;
+        color: #333;
+        margin-bottom: 10px;
+        margin-top: 10px;
+      }
+      
+      .form-group {
+        margin-bottom: 8px;
+      }
+      
+      .form-label {
+        margin-bottom: 4px;
+        color: #333;
+      }
+      
+      .form-control {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      
+      .form-select {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      
+      .form-control-file {
+        margin-bottom: 16px;
+      }
+      
+      button {
+        width: 50%;
+        padding: 10px;
+        background-color: black;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+        align-content: center;
+        font-weight: 500;
+        margin: auto;
+      }
+      
+      button:hover {
+        background-color: #62A404;
+        font-weight: 500;
+      }
+  }
+  

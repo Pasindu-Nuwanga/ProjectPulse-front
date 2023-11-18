@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import "./InspectionRequestForm.css";
 
 const InspectionRequestForm = ({ projectId }) => {
   const [inspectionName, setInspectionName] = useState('');
@@ -8,6 +9,7 @@ const InspectionRequestForm = ({ projectId }) => {
   const [selectedPhase, setSelectedPhase] = useState('');
   const [constructionType, setConstructionType] = useState('');
   const [fileAttachment, setFileAttachment] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
   
   
   const [inspectionDate, setInspectionDate] = useState(
@@ -57,32 +59,59 @@ const InspectionRequestForm = ({ projectId }) => {
     formData.append('inspectionDate', new Date(inspectionDate).toISOString());
 
     try {
-      await axios.post('http://localhost:8090/inspection/request', formData, {
+      const response = await axios.post('http://localhost:8090/inspection/request', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log('Inspection request submitted successfully!');
+      console.log('Inspection is requested:', response.data);
+      // Set the success message upon successful phase creation
+      setSuccessMessage('Inspection was requested successfully!');
+      // You may also want to clear the success message after a certain period of time
+
+      // Optionally, reset the form fields after successful submission
+      setInspectionName('');
+      setPhaseSection('');
+      setSelectedPhase('');
+      setConstructionType('');
     } catch (error) {
-      console.error('Error submitting inspection request:', error);
+      console.error('Error creating inspection:', error);
+      // Handle error, e.g., show an error message to the user
     }
   };
 
   return (
-    <div>
-      <h2>Inspection Request</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Inspection Name:</label>
-          <input type="text" value={inspectionName} onChange={(e) => setInspectionName(e.target.value)} required />
+    <div className="inspection-form-container">
+
+      <form onSubmit={handleSubmit} className="inspection-form">
+        <div className="form-group">
+          <label className="form-label">Inspection Name:</label>
+          <input
+            type="text"
+            value={inspectionName}
+            onChange={(e) => setInspectionName(e.target.value)}
+            required
+            className="form-control"
+          />
         </div>
-        <div>
-          <label>Phase Section:</label>
-          <input type="text" value={phaseSection} onChange={(e) => setPhaseSection(e.target.value)} required />
+        <div className="form-group">
+          <label className="form-label">Phase Section:</label>
+          <input
+            type="text"
+            value={phaseSection}
+            onChange={(e) => setPhaseSection(e.target.value)}
+            required
+            className="form-control"
+          />
         </div>
-        <div>
-          <label>Select Phase:</label>
-          <select value={selectedPhase} onChange={(e) => setSelectedPhase(e.target.value)} required>
+        <div className="form-group">
+          <label className="form-label">Select Phase:</label>
+          <select
+            value={selectedPhase}
+            onChange={(e) => setSelectedPhase(e.target.value)}
+            required
+            className="form-select"
+          >
             <option value="" disabled>
               Select a phase
             </option>
@@ -93,20 +122,41 @@ const InspectionRequestForm = ({ projectId }) => {
             ))}
           </select>
         </div>
-        <div>
-          <label>Construction Type:</label>
-          <input type="text" value={constructionType} onChange={(e) => setConstructionType(e.target.value)} required />
+        <div className="form-group">
+          <label className="form-label">Construction Type:</label>
+          <input
+            type="text"
+            value={constructionType}
+            onChange={(e) => setConstructionType(e.target.value)}
+            required
+            className="form-control"
+          />
         </div>
-        <div>
-          <label>Inspection Request Date:</label>
-          <input type="datetime-local" value={inspectionRequestDate} readOnly />
+        <div className="form-group">
+          <label className="form-label">Inspection Request Date:</label>
+          <input
+            type="datetime-local"
+            value={inspectionRequestDate}
+            readOnly
+            className="form-control"
+          />
         </div>
-        <div>
-          <label>File Attachment:</label>
-          <input type="file" onChange={handleFileChange} required />
+        <div className="form-group">
+          <label className="form-label">File Attachment:</label>
+          <input
+            type="file"
+            onChange={handleFileChange}
+            required
+            className="form-control-file"
+          />
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" className="btn btn-primary">
+          Submit
+        </button>
       </form>
+      {successMessage && (
+        <div className="inspection-request-success-message">{successMessage}</div>
+      )}
     </div>
   );
 };

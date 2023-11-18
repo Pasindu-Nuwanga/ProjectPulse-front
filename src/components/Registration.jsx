@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Registration.css"; // Import your CSS file for styling (create this file)
 
@@ -12,6 +12,7 @@ function Registration() {
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [projects, setProjects] = useState([]);
 
   const roles = [
     { id: 1, name: "Admin" },
@@ -21,32 +22,42 @@ function Registration() {
     { id: 5, name: "Consultant" },
   ];
 
-  const projects = [
-    { id: 1, name: "Project1" },
-    { id: 2, name: "Project2" },
-    { id: 3, name: "Project3" },
-  ];
+  useEffect(() => {
+    // Fetch projects when the component mounts
+    const fetchProjects = async () => {
+      try {
+        const response = await axios.get("http://localhost:8090/project/all");
+        setProjects(response.data);
+      } catch (err) {
+        console.error("Error fetching projects:", err);
+      }
+    };
+
+    fetchProjects();
+  }, []); // Empty dependency array ensures the effect runs only once
 
   const handleRegistration = async (event) => {
     event.preventDefault();
 
     // Client-side validation
-    if (!firstname.trim()||!lastname.trim()||!email.trim()||!password.trim()) {
-        setError("Empty field!");
-        return;
-      }
+    if (!firstname.trim() || !lastname.trim() || !email.trim() || !password.trim()) {
+      setError("Empty field!");
+      return;
+    }
 
+    const newInfo = {
+      firstName: firstname,
+      lastName: lastname,
+      email: email,
+      password: password,
+      roleId: parseInt(roleId), // Parse the role ID as an integer
+      projectId: projectId, // Parse the project ID as an integer
+    }
+
+    console.log("This is the new info: ", newInfo);;
     try {
-      console.log(projectId);
-      const response = await axios.post("http://localhost:8090/api/v1/employee/save", {
-        firstName: firstname,
-        lastName: lastname,
-        email: email,
-        password: password,
-        roleId: parseInt(roleId), // Parse the role ID as an integer
-        projectId: parseInt(projectId), // Parse the project ID as an integer
-      });
-      console.log(response.data);
+      const response = await axios.post("http://localhost:8090/api/v1/employee/save", newInfo);
+
       if (response.status === 200) {
         setSuccess("Registration was successful!");
         setError("");
@@ -107,20 +118,22 @@ function Registration() {
       </div>
 
       <div className="form-group">
-        <select
-          className="form-control"
-          value={projectId}
-          onChange={(event) => setProjectId(event.target.value)}
-          required
-        >
-          <option value="" className="form-option">Select a project</option>
-          {projects.map((project) => (
-            <option key={project.id} value={project.id} className="form-option">
-              {project.name}
-            </option>
-          ))}
-        </select>
-      </div>
+              <select
+                className="form-control"
+                value={projectId}
+                onChange={(event) => setProjectId(event.target.value)}
+                required
+              >
+                <option value="" className="form-option">
+                  Select a project
+                </option>
+                {projects.map((project) => (
+                  <option key={project.projectId} value={project.projectId} className="form-option">
+                    {project.projectName}
+                  </option>
+                ))}
+              </select>
+            </div>
 
           <button type="submit" className="btn btn-primary mt-4" onClick={handleRegistration}>
             Register

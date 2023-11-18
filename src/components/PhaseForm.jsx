@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import "./PhaseForm.css";
 
 const PhaseForm = () => {
   const [phaseName, setPhaseName] = useState('');
   const [selectedProject, setSelectedProject] = useState('');
   const [projects, setProjects] = useState([]);
+  const [successMessage, setSuccessMessage] = useState(null);
 
   useEffect(() => {
     // Fetch specific project by ID from localStorage
@@ -13,6 +15,7 @@ const PhaseForm = () => {
       axios.get(`http://localhost:8090/project/${projectId}`)
         .then(response => {
           setProjects([response.data]); // Set the fetched project as an array to match your map function
+          setSelectedProject(response.data.projectName); // Set the selected project
         })
         .catch(error => {
           console.error('Error fetching project by ID:', error);
@@ -30,7 +33,12 @@ const PhaseForm = () => {
       });
 
       console.log('Phase created:', response.data);
-      // Handle success, e.g., show a success message to the user
+      // Set the success message upon successful phase creation
+      setSuccessMessage('Phase created successfully!');
+      // You may also want to clear the success message after a certain period of time
+
+      // Optionally, reset the form fields after successful submission
+      setPhaseName('');
     } catch (error) {
       console.error('Error creating phase:', error);
       // Handle error, e.g., show an error message to the user
@@ -38,34 +46,25 @@ const PhaseForm = () => {
   };
 
   return (
-    <div>
+    <div className="phase-form-container"> 
       <h2>Create a New Phase</h2>
-      <form onSubmit={handleFormSubmit}>
+
+      {successMessage && (
+        <div className="phase-success-message">{successMessage}</div>
+      )}
+
+      <form className="phase-form" onSubmit={handleFormSubmit}>
         <div>
-          <label>Phase Name:</label>
+          <label className="phase-label">Phase Name:</label> 
           <input
             type="text"
             value={phaseName}
             onChange={(e) => setPhaseName(e.target.value)}
             required
+            className="phase-input" 
           />
         </div>
-        <div>
-          <label>Project Name:</label>
-          <select
-            value={selectedProject}
-            onChange={(e) => setSelectedProject(e.target.value)}
-            required
-          >
-            <option value="" disabled>Select a project</option>
-            {projects.map(project => (
-              <option key={project.projectId} value={project.projectName}>
-                {project.projectName}
-              </option>
-            ))}
-          </select>
-        </div>
-        <button type="submit">Create Phase</button>
+        <button type="submit" className="phase-submit-btn">Create Phase</button> 
       </form>
     </div>
   );

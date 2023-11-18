@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import "./ProjectForm.css";
 
 const ProjectForm = () => {
   const [projectName, setProjectName] = useState('');
+  const [successMessage, setSuccessMessage] = useState(null);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -13,17 +15,27 @@ const ProjectForm = () => {
       });
 
       console.log('Project created:', response.data);
-      // Handle success, e.g., show a success message to the user
+      // Set the success message upon successful phase creation
+      setSuccessMessage('Project created successfully!');
+      // You may also want to clear the success message after a certain period of time
+
+      // Optionally, reset the form fields after successful submission
+      setProjectName('');
     } catch (error) {
-      console.error('Error creating project:', error);
+      console.error('Error creating phase:', error);
       // Handle error, e.g., show an error message to the user
     }
   };
 
   return (
-    <div>
+    <div className="project-form-container"> 
       <h2>Create a New Project</h2>
-      <form onSubmit={handleFormSubmit}>
+
+      {successMessage && (
+        <div className="project-success-message">{successMessage}</div>
+      )}
+
+      <form className="project-form" onSubmit={handleFormSubmit}> 
         <div>
           <label>Project Name:</label>
           <input

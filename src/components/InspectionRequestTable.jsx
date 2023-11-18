@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import "./InspectionRequestTable.css";
 
 const InspectionRequestTable = ({ projectId }) => {
   const [inspectionRequests, setInspectionRequests] = useState([]);
   const [phases, setPhases] = useState([]);
   const [selectedPhase, setSelectedPhase] = useState('');
   const [editedDates, setEditedDates] = useState({});
+  const [updateStatus, setUpdateStatus] = useState(null); // New state variable for update status
 
   useEffect(() => {
     const projectId = localStorage.getItem('projectId');
@@ -54,17 +56,16 @@ const InspectionRequestTable = ({ projectId }) => {
       [inspectionId]: newDate,
     }));
   };
-  
 
   const handleSaveDate = async (inspectionId) => {
     try {
       const newDate = editedDates[inspectionId];
-  
+
       if (!newDate) {
         // If newDate is undefined, do nothing and exit the function
         return;
       }
-  
+
       await axios.put(
         `http://localhost:8090/inspection/request/updateDate/${inspectionId}`,
         newDate,
@@ -74,13 +75,16 @@ const InspectionRequestTable = ({ projectId }) => {
           },
         }
       );
-  
+
+      // Set the update status message
+      setUpdateStatus('Inspection date updated successfully!');
+
       // Remove the inspectionId from editedDates
       setEditedDates((prevDates) => {
         const { [inspectionId]: deletedDate, ...rest } = prevDates;
         return rest;
       });
-  
+
       // Update the inspectionRequests state to reflect the updated date
       setInspectionRequests((prevRequests) =>
         prevRequests.map((request) =>
@@ -91,18 +95,24 @@ const InspectionRequestTable = ({ projectId }) => {
       );
     } catch (error) {
       console.error('Error updating inspection date:', error);
-      console.log('Error response:', error.response); // Add this line to log the detailed error response
+      console.log('Error response:', error.response);
+      // Add this line to log the detailed error response
+
+      // Set the update status message for error
+      setUpdateStatus('Error updating inspection date');
     }
   };
-  
-  
-  return (
-    <div>
-      <h2>Inspection Requests</h2>
 
+  // Sort inspection requests by inspection request date in descending order
+  const sortedInspectionRequests = inspectionRequests.slice().sort((a, b) => {
+    return new Date(b.inspectionRequestDate) - new Date(a.inspectionRequestDate);
+  });
+
+  return (
+    <div className="inspection-table-container">
       {/* Phase Dropdown */}
-      <label>Select Phase: </label>
-      <select onChange={(e) => setSelectedPhase(e.target.value)}>
+      <label className="phase-label">Select Phase: </label>
+      <select onChange={(e) => setSelectedPhase(e.target.value)} className="phase-select">
         <option value="">-- Select Phase --</option>
         {phases.map((phase) => (
           <option key={phase.phaseId} value={phase.phaseId}>
@@ -111,64 +121,75 @@ const InspectionRequestTable = ({ projectId }) => {
         ))}
       </select>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Inspection Name</th>
-            <th>Phase Section</th>
-            <th>Construction Type</th>
-            <th>Phase Name</th>
-            <th>Inspection Request Date</th>
-            <th>Inspection Date</th>
-            <th>Files</th>
-          </tr>
-        </thead>
-        <tbody>
-          {inspectionRequests.map((request) => (
-            <tr key={request.inspectionId}>
-              <td>{request.inspectionName}</td>
-              <td>{request.phaseSection}</td>
-              <td>{request.constructionType}</td>
-              <td>{request.phases ? request.phases.phaseName : ''}</td>
-              <td>{new Date(request.inspectionRequestDate).toLocaleString()}</td>
-              <td>
-                {editedDates[request.inspectionId] !== undefined ? (
-                  <input
-                    type="datetime-local"
-                    value={editedDates[request.inspectionId] || ''}
-                    onChange={(e) => handleEditDate(request.inspectionId, e.target.value)}
-                  />
-                ) : (
-                  <span>
-                    {request.inspectionDate ? new Date(request.inspectionDate).toLocaleString() : 'Not scheduled yet'}
-                  </span>
-                )}
-              </td>
-              <td>
-                {request.fileName && (
-                  <button onClick={() => downloadFile(request.fileName)}>
-                    {request.fileName}
-                  </button>
-                )}
-              </td>
-              <td>
-                {editedDates[request.inspectionId] !== undefined ? (
-                  <>
-                    <button onClick={() => handleSaveDate(request.inspectionId)}>Save</button>
-                    <button onClick={() => setEditedDates((prevDates) => ({ ...prevDates, [request.inspectionId]: undefined }))}>
-                      Cancel
-                    </button>
-                  </>
-                ) : (
-                  <button onClick={() => handleEditDate(request.inspectionId, new Date(request.inspectionDate).toISOString().slice(0, 16))}>
-                    Schedule Inspection
-                  </button>
-                )}
-              </td>
+      {updateStatus && (
+        <div className="update-status-message">
+          {updateStatus}
+        </div>
+      )}
+
+      <div className='table-scroll'>
+        <table className="inspection-table">
+          <thead>
+            <tr>
+              <th>Inspection Name</th>
+              <th>Phase Section</th>
+              <th>Construction Type</th>
+              <th>Inspection Request Date</th>
+              <th>Inspection Date</th>
+              <th>Files</th>
+              <th>Schedule</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {sortedInspectionRequests.map((request) => (
+              <tr key={request.inspectionId}>
+                <td>{request.inspectionName}</td>
+                <td>{request.phaseSection}</td>
+                <td>{request.constructionType}</td>
+                <td>{new Date(request.inspectionRequestDate).toLocaleString()}</td>
+                <td>
+                  {editedDates[request.inspectionId] !== undefined ? (
+                    <input
+                      type="datetime-local"
+                      value={editedDates[request.inspectionId] || ''}
+                      onChange={(e) => handleEditDate(request.inspectionId, e.target.value)}
+                      min={new Date().toISOString().slice(0, 16)}
+                    />
+                  ) : (
+                    <span>
+                      {request.inspectionDate ? new Date(request.inspectionDate).toLocaleString() : 'Not scheduled yet'}
+                    </span>
+                  )}
+                </td>
+                <td>
+                  {request.fileName && (
+                    <button onClick={() => downloadFile(request.fileName)} className="file-download-btn">
+                      <i className='fas fa-download'/>{" " + request.fileName}
+                    </button>
+                  )}
+                </td>
+                <td>
+                  {editedDates[request.inspectionId] !== undefined ? (
+                    <>
+                      <button onClick={() => handleSaveDate(request.inspectionId)} className="save-btn">
+                        <i className='fas fa-save'/>
+                      </button>
+                      <button onClick={() => setEditedDates((prevDates) => ({ ...prevDates, [request.inspectionId]: undefined }))} className="cancel-btn">
+                        <i className='fas fa-cancel'/>
+                      </button>
+                    </>
+                  ) : (
+                    <button onClick={() => handleEditDate(request.inspectionId, new Date(request.inspectionDate).toISOString().slice(0, 16))} className="schedule-btn">
+                      <i className='fas fa-clock'/>
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      
     </div>
   );
 };

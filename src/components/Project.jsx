@@ -2,9 +2,9 @@ import Navbar from "../components/Navbar";
 import Open from "./Open";
 import CompletedTask from "./CompletedTask";
 import "./CompletedTasksStyles.css";
+import PhaseForm from "./PhaseForm";
 import Footer from "./Footer";
-import FileUpload from "./FileUpload";
-import FileList from "./FileList";
+
 
 function Project({roleName, username}) {
     return (
@@ -16,31 +16,34 @@ function Project({roleName, username}) {
        origin = "about-text"
        title = "Visit Our Project"
        />
+
+       <PhaseForm/>
+
        <div className="project-completed">
-        <h1>Recently Completed Tasks</h1>
+        <h1>Recently Completed Phases</h1>
         <div className="tasks">
             <CompletedTask
             image= "/images/Task1.jpg"
-            heading= "Task 01"
+            heading= "Phase 01"
             body= "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem."
             />
 
             <CompletedTask
             image= "/images/Task2.jpg"
-            heading= "Task 02"
+            heading= "Phase 02"
             body= "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem."
             />
 
             <CompletedTask
             image= "/images/Task3.jpg"
-            heading= "Task 03"
+            heading= "Phase 03"
             body= "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem."
             />
         </div>
        </div>
 
        <Footer/>
-       <FileUpload/>
+       
       </>
 
     );
