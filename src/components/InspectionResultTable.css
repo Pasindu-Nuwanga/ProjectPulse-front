@@ -1,8 +1,10 @@
-/* InspectionResultTable Styles
+
 .inspection-result-table-container {
-    max-width: 800px;
+    max-width: 1000px;
     width: auto;
-    margin-left: 20px;
+    margin-left: 50px;
+    margin-top: 50px;
+    margin-bottom: 50px;
   }
   
   .inspection-result-table-label {
@@ -12,17 +14,17 @@
     margin-top: 20px;
   }
   
-  .phase-label {
+  .phase-label-result {
     margin-right: 10px;
   }
   
-  .phase-select {
+  .phase-select-result {
     padding: 8px;
     margin-bottom: 16px;
     width: 70%;
   }
   
-  .table-scroll {
+  .table-scroll-result {
     overflow-x: auto;
   }
   
@@ -81,7 +83,7 @@
       margin-top: 10px;
     }
   
-    .table-scroll {
+    .table-scroll-result {
       overflow-x: scroll;
     }
   
@@ -90,4 +92,4 @@
       font-size: 12px;
     }
   }
-   */
+  

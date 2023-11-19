@@ -58,8 +58,8 @@ const InspectionResultTable = ({ projectId }) => {
   return (
     <div className="inspection-result-table-container">
       {/* Phase Dropdown */}
-      <label className="phase-label">Select Phase: </label>
-      <select onChange={(e) => setSelectedPhase(e.target.value)} className="phase-select">
+      <label className="phase-label-result">Select Phase: </label>
+      <select onChange={(e) => setSelectedPhase(e.target.value)} className="phase-select-result">
         <option value="">-- Select Phase --</option>
         {phases.map((phase) => (
           <option key={phase.phaseId} value={phase.phaseId}>
@@ -68,7 +68,7 @@ const InspectionResultTable = ({ projectId }) => {
         ))}
       </select>
 
-      <div className='table-scroll'>
+      <div className='table-scroll-result'>
         <table className="inspection-result-table">
           <thead>
             <tr>
@@ -88,7 +88,11 @@ const InspectionResultTable = ({ projectId }) => {
                 <td>{request.inspections ? request.inspections.phaseSection : ''}</td>
                 <td>{request.inspections ? request.inspections.constructionType : ''}</td>
                 <td>{new Date(request.inspectionResultDate).toLocaleString()}</td>
-                <td>{request.inspectionStatus}</td>
+                
+                <td style={{ color: request.inspectionStatus === 'Approved' ? 'green' : 'red', fontWeight: 'bold' }}>
+                  {request.inspectionStatus}
+                </td>
+
                 <td>{request.comments}</td>
                 
                 <td>

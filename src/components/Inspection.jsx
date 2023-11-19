@@ -6,6 +6,7 @@ import Open from "./Open";
 import { useState } from "react";
 import "./Inspection.css";
 import InspectionResultForm from "./InspectionResultForm";
+import InspectionResultTable from "./InspectionResultTable";
 
 function Inspection({roleName, username}) {
 
@@ -46,11 +47,18 @@ function Inspection({roleName, username}) {
             >
               Result Form
             </button>
+            <button
+              className={`inspection-button ${activeComponent === 'inspectionResultTable' ? 'active' : ''}`}
+              onClick={() => handleNavigation('inspectionResultTable')}
+            >
+              Result Form
+            </button>
           </div>
   
           {activeComponent === 'inspectionRequestForm' && <InspectionRequestForm />}
           {activeComponent === 'inspectionRequestTable' && <InspectionRequestTable />}
           {activeComponent === 'inspectionResultForm' && <InspectionResultForm/>}
+          {activeComponent === 'inspectionResultTable' && <InspectionResultTable/>}
         </div>
       </div>
 
