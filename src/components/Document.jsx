@@ -6,7 +6,7 @@ import Open from "./Open";
 import "./Document.css";
 import { useState } from "react";
 
-function Document({roleName, username}) {
+function Document({role, roleName, username}) {
 
     const [activeComponent, setActiveComponent] = useState('fileUpload');
     
@@ -27,12 +27,12 @@ function Document({roleName, username}) {
       <div>
         <div className="document-container">
           <div className="document-buttons">
-            <button
+            {role === 4 && (<button
               className={`document-button ${activeComponent === 'fileUpload' ? 'active' : ''}`}
               onClick={() => handleNavigation('fileUpload')}
             >
               File Upload
-            </button>
+            </button>)}
             <button
               className={`document-button ${activeComponent === 'fileList' ? 'active' : ''}`}
               onClick={() => handleNavigation('fileList')}
@@ -42,7 +42,7 @@ function Document({roleName, username}) {
           </div>
   
           {activeComponent === 'fileUpload' && <FileUpload />}
-          {activeComponent === 'fileList' && <FileList />}
+          {activeComponent === 'fileList' && <FileList role={role} />}
         </div>
       </div>
 

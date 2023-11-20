@@ -6,7 +6,10 @@ import PhaseForm from "./PhaseForm";
 import Footer from "./Footer";
 
 
-function Project({roleName, username}) {
+function Project({role, roleName, username}) {
+
+  const isRole = role === 2;
+
     return (
       <>
        <Navbar roleName={roleName} username={username}/>
@@ -17,7 +20,7 @@ function Project({roleName, username}) {
        title = "Visit Our Project"
        />
 
-       <PhaseForm/>
+       {isRole && <PhaseForm/>}
 
        <div className="project-completed">
         <h1>Recently Completed Phases</h1>

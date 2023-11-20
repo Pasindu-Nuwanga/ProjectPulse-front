@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "./FileList.css";
 
-const FileList = ({ projectId }) => {
+const FileList = ({ projectId, role }) => {
   const [phases, setPhases] = useState([]);
   const [selectedPhase, setSelectedPhase] = useState('');
   const [files, setFiles] = useState([]);
@@ -113,14 +113,14 @@ const FileList = ({ projectId }) => {
                   <i className='fas fa-download'/>
                 </button>
               </td>
-              <td>
+              {(role === 4 &&<td>
                 <button
                   onClick={() => handleDelete(file.documentId, file.documentName)}
                   className="file-list-btn file-list-btn-delete"
                 >
                 <i className='fas fa-trash'/>
                 </button>
-              </td>
+              </td>)}
               <hr/>
             </tr>
           ))}

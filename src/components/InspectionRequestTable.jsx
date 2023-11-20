@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "./InspectionRequestTable.css";
 
-const InspectionRequestTable = ({ projectId }) => {
+const InspectionRequestTable = ({ projectId, role }) => {
   const [inspectionRequests, setInspectionRequests] = useState([]);
   const [phases, setPhases] = useState([]);
   const [selectedPhase, setSelectedPhase] = useState('');
@@ -108,6 +108,8 @@ const InspectionRequestTable = ({ projectId }) => {
     return new Date(b.inspectionRequestDate) - new Date(a.inspectionRequestDate);
   });
 
+  console.log('Role:', role);
+
   return (
     <div className="inspection-table-container">
       {/* Phase Dropdown */}
@@ -137,7 +139,7 @@ const InspectionRequestTable = ({ projectId }) => {
               <th>Inspection Request Date</th>
               <th>Inspection Date</th>
               <th>Files</th>
-              <th>Schedule</th>
+              {(role === 5 && <th>Schedule</th>)}
             </tr>
           </thead>
           <tbody>
@@ -168,7 +170,9 @@ const InspectionRequestTable = ({ projectId }) => {
                     </button>
                   )}
                 </td>
-                <td>
+
+                {/* Schedule only for Consultant */}
+                {(role === 5 && <td>
                   {editedDates[request.inspectionId] !== undefined ? (
                     <>
                       <button onClick={() => handleSaveDate(request.inspectionId)} className="save-btn">
@@ -183,7 +187,7 @@ const InspectionRequestTable = ({ projectId }) => {
                       <i className='fas fa-clock'/>
                     </button>
                   )}
-                </td>
+                </td>)}
               </tr>
             ))}
           </tbody>

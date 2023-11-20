@@ -8,9 +8,9 @@ import "./Inspection.css";
 import InspectionResultForm from "./InspectionResultForm";
 import InspectionResultTable from "./InspectionResultTable";
 
-function Inspection({roleName, username}) {
+function Inspection({role, roleName, username}) {
 
-  const [activeComponent, setActiveComponent] = useState('inspectionRequestForm');
+  const [activeComponent, setActiveComponent] = useState('');
   
     const handleNavigation = (component) => {
       setActiveComponent(component);
@@ -29,35 +29,40 @@ function Inspection({roleName, username}) {
       <div>
         <div className="inspection-container">
           <div className="inspection-buttons">
-            <button
+          {role === 3 && (<button
               className={`inspection-button ${activeComponent === 'inspectionRequestForm' ? 'active' : ''}`}
               onClick={() => handleNavigation('inspectionRequestForm')}
             >
               Request Form
-            </button>
+            </button>)}
             <button
               className={`inspection-button ${activeComponent === 'inspectionRequestTable' ? 'active' : ''}`}
               onClick={() => handleNavigation('inspectionRequestTable')}
             >
               Request Table
             </button>
-            <button
-              className={`inspection-button ${activeComponent === 'inspectionResultForm' ? 'active' : ''}`}
-              onClick={() => handleNavigation('inspectionResultForm')}
-            >
-              Result Form
-            </button>
+            
+            {/* Result form access only for consultant */}
+            {role === 5 && (
+              <button
+                className={`inspection-button ${activeComponent === 'inspectionResultForm' ? 'active' : ''}`}
+                onClick={() => handleNavigation('inspectionResultForm')}
+              >
+                Result Form
+              </button>
+            )}
+
             <button
               className={`inspection-button ${activeComponent === 'inspectionResultTable' ? 'active' : ''}`}
               onClick={() => handleNavigation('inspectionResultTable')}
             >
-              Result Form
+              Result Table
             </button>
           </div>
   
-          {activeComponent === 'inspectionRequestForm' && <InspectionRequestForm />}
-          {activeComponent === 'inspectionRequestTable' && <InspectionRequestTable />}
-          {activeComponent === 'inspectionResultForm' && <InspectionResultForm/>}
+          {role === 3 && activeComponent === 'inspectionRequestForm' && <InspectionRequestForm />}
+          {activeComponent === 'inspectionRequestTable' && <InspectionRequestTable role = {role}/>}
+          {role === 5 && activeComponent === 'inspectionResultForm' && <InspectionResultForm/>}
           {activeComponent === 'inspectionResultTable' && <InspectionResultTable/>}
         </div>
       </div>
