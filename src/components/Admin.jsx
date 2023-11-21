@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import ProjectForm from "./ProjectForm";
 import Registration from "./Registration";
 import UserProfile from './UserProfile';
-import "./Admin.css";  // Assuming you have a CSS file for Admin styles
+import "./Admin.css";
 import ProjectList from './ProjectList';
 import Footer from './Footer';
+import UserTable from './UserTable';
 
 function Admin({roleName, username}) {
-  const [activeComponent, setActiveComponent] = useState('projectForm');
+  const [activeComponent, setActiveComponent] = useState('');
 
   const handleNavigation = (component) => {
     setActiveComponent(component);
@@ -35,11 +36,18 @@ function Admin({roleName, username}) {
           >
             User Registration
           </button>
+          <button
+            className={`admin-button ${activeComponent === 'userTable' ? 'active' : ''}`}
+            onClick={() => handleNavigation('userTable')}
+          >
+            User Details
+          </button>
         </div>
 
         {activeComponent === 'projectForm' && <ProjectForm />}
         {activeComponent === 'registration' && <Registration />}
         {activeComponent === 'projectList' && <ProjectList />}
+        {activeComponent === 'userTable' && <UserTable />}
       </div>
 
       <Footer/>

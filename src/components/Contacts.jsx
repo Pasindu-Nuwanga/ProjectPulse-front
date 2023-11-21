@@ -2,6 +2,7 @@ import Navbar from "../components/Navbar";
 import Footer from "./Footer";
 import Open from "./Open";
 import ProjectList from "./ProjectList";
+import UserTable from "./UserTable";
 
 
 
@@ -16,7 +17,7 @@ function Contacts({roleName, username}) {
        title = "Contact Us"
        />
 
-       <ProjectList/>
+       <UserTable/>
 
        <Footer/>
        
