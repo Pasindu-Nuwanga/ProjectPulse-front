@@ -1,6 +1,8 @@
 import Navbar from "../components/Navbar";
 import Footer from "./Footer";
 import Open from "./Open";
+import ProjectList from "./ProjectList";
+
 
 
 function Contacts({roleName, username}) {
@@ -13,6 +15,8 @@ function Contacts({roleName, username}) {
        origin = "about-text"
        title = "Contact Us"
        />
+
+       <ProjectList/>
 
        <Footer/>
        

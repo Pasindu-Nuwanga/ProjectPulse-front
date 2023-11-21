@@ -4,11 +4,18 @@ import CompletedTask from "./CompletedTask";
 import "./CompletedTasksStyles.css";
 import PhaseForm from "./PhaseForm";
 import Footer from "./Footer";
+import PhaseList from "./PhaseList";
+import { useState } from "react";
+import "./Project.css";
 
 
 function Project({role, roleName, username}) {
 
-  const isRole = role === 2;
+  const [activeComponent, setActiveComponent] = useState('');
+    
+      const handleNavigation = (component) => {
+        setActiveComponent(component);
+      };
 
     return (
       <>
@@ -20,7 +27,27 @@ function Project({role, roleName, username}) {
        title = "Visit Our Project"
        />
 
-       {isRole && <PhaseForm/>}
+       <div>
+        <div className="phase-container">
+          <div className="phase-buttons">
+            {role === 2 && (<button
+              className={`phase-button ${activeComponent === 'phaseForm' ? 'active' : ''}`}
+              onClick={() => handleNavigation('phaseForm')}
+            >
+              Create Phase
+            </button>)}
+            <button
+              className={`phase-button ${activeComponent === 'phaseList' ? 'active' : ''}`}
+              onClick={() => handleNavigation('phaseList')}
+            >
+              Phase List
+            </button>
+          </div>
+  
+          {role === 2 && activeComponent === 'phaseForm' && <PhaseForm />}
+          {activeComponent === 'phaseList' && <PhaseList role={role} />}
+        </div>
+      </div>
 
        <div className="project-completed">
         <h1>Recently Completed Phases</h1>

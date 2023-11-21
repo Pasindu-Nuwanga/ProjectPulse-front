@@ -41,7 +41,7 @@ function Document({role, roleName, username}) {
             </button>
           </div>
   
-          {activeComponent === 'fileUpload' && <FileUpload />}
+          {role === 4 && activeComponent === 'fileUpload' && <FileUpload />}
           {activeComponent === 'fileList' && <FileList role={role} />}
         </div>
       </div>

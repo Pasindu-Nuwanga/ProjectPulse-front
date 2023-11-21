@@ -1,17 +1,15 @@
-
-.admin-container {
-    width: 95%;
+.phase-container {
+    width: 100%;
     height: auto;
     padding-top: 20px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #efefef;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    margin-top: 50px;
+    background-color: #f8f9fa;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
   }
   
-  .admin-header {
+  .phase-header {
     text-align: center;
     font-size: 28px;
     color: #333;
@@ -23,13 +21,13 @@
     font-size: 32px;
   }
   
-  .admin-buttons {
+  .phase-buttons {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
   }
   
-  .admin-button {
+  .phase-button {
     padding: 10px 20px;
     margin: 0 10px;
     font-size: 16px;
@@ -41,17 +39,14 @@
     transition: background-color 0.3s ease-in-out;
   }
   
-  .admin-button:hover {
-    background-color: black;
-  }
-  
-  .admin-component {
-    margin-top: 20px;
-  }
-
-  .admin-button.active {
+  .phase-button:hover {
     background-color: #62A404;
   }
   
- 
-  
+  .phase-component {
+    margin-top: 20px;
+  }
+
+  .phase-button.active {
+    background-color: #62A404;
+  }

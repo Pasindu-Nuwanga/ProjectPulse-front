@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
-function Login({ setRole, setRoleName, setUsername, setProjectId, setProjectName }) {
+function Login({ setRole, setRoleName, setUsername, setProjectId, setProjectName, setUserEmail }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -23,10 +23,14 @@ function Login({ setRole, setRoleName, setUsername, setProjectId, setProjectName
       if (response.data) {
         const userData = response.data;
 
+        const userEmail = userData.email;
+      console.log("User email:", userEmail);
+
         console.log("This is the user data", userData);
         setRole(userData.roles.roleId);
         setRoleName(userData.roles.roleName);
         setUsername(userData.firstName + " " + userData.lastName);
+        setUserEmail(userEmail);
         setProjectId(userData.projects.projectId);
         setProjectName(userData.projects.projectName);
 
