@@ -44,7 +44,7 @@ function App() {
     <div>
       <BrowserRouter>
          <Routes>
-            <Route path="/admin" element={<Admin/>} />
+            <Route path="/admin" element={<Admin role={role} roleName={roleName} username={username} projectName={projectName}/>} />
             <Route path="/home" element={role === 2 || role === 3 || role === 4 || role === 5 ? <Home role={role} roleName={roleName} username={username} projectName={projectName}/>:<NotAllowed/>}/>
             <Route path="/about" element={role === 1 || role === 2 || role === 3 || role === 4 || role === 5 ? <About role={role} roleName={roleName} username={username}/>:<NotAllowed/>}/>
             <Route path="/team" element={role === 1 || role === 2 || role === 3 || role === 4 || role === 5 ? <Team role={role} roleName={roleName} username={username}/>:<NotAllowed/>}/>

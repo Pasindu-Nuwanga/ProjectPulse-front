@@ -21,6 +21,10 @@ const ProjectForm = () => {
 
       // Optionally, reset the form fields after successful submission
       setProjectName('');
+
+      setTimeout(() => {
+        setSuccessMessage(null);
+        }, 5000);
     } catch (error) {
       console.error('Error creating phase:', error);
       // Handle error, e.g., show an error message to the user

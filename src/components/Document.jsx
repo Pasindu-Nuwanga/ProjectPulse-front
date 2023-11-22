@@ -8,7 +8,7 @@ import { useState } from "react";
 
 function Document({role, roleName, username}) {
 
-    const [activeComponent, setActiveComponent] = useState('fileUpload');
+    const [activeComponent, setActiveComponent] = useState('');
     
       const handleNavigation = (component) => {
         setActiveComponent(component);

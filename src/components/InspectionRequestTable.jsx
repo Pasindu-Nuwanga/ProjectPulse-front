@@ -79,6 +79,9 @@ const InspectionRequestTable = ({ projectId, role }) => {
       // Set the update status message
       setUpdateStatus('Inspection date updated successfully!');
 
+      // Reset the success message after a few seconds
+      setTimeout(() => setUpdateStatus(''), 5000);
+
       // Remove the inspectionId from editedDates
       setEditedDates((prevDates) => {
         const { [inspectionId]: deletedDate, ...rest } = prevDates;

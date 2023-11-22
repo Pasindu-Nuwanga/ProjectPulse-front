@@ -72,6 +72,7 @@
     margin-top: 125px;
 }
 
+
 .Nav-links{
     text-decoration: none;
     color: azure;
@@ -81,6 +82,9 @@
 
 .Nav-links:hover{
     color: yellow;
+    background-color: black;
+    padding: 9px ;
+    font-weight: 640;
     transition: all 0.3s ease-in-out;
 }
 

@@ -13,8 +13,6 @@
     justify-content: center;
     align-items: center;
     height: 670px;
-    border-radius: 20px;
-    
   }
   
   .left-section img {
@@ -29,12 +27,13 @@
     justify-content: center;
     align-items: center;
     height: 670px;
-    border-radius: 20px;
   }
   
   .card {
-    width: 300px;
-    padding: 20px;
+    width: 320px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
     background-color: rgba(0, 0, 0, 0.5);
@@ -63,20 +62,14 @@
     border: 1px solid #cccccc;
     border-radius: 5px;
   }
-
-  label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 5px;
-  }
   
   .btn-primary {
     background-color: #09090a;
     color: #ffffff;
     border: none;
-    padding: 5px 10px;
     font-size: 20px;
     font-weight: 500;
+    width: 150px;
     cursor: pointer;
   }
   

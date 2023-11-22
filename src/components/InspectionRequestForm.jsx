@@ -74,9 +74,21 @@ const InspectionRequestForm = ({ projectId }) => {
       setPhaseSection('');
       setSelectedPhase('');
       setConstructionType('');
+
+      setTimeout(() => {
+        setSuccessMessage(null);
+        }, 5000);
+
     } catch (error) {
       console.error('Error creating inspection:', error);
       // Handle error, e.g., show an error message to the user
+      if (error.response && error.response.status === 500 && error.response.data === 'Duplicate attachments! Please rename your file.') {
+        // Set the error message for duplicate attachments
+        setSuccessMessage('Duplicate attachments! Please rename your file.');
+      } else {
+        // Set a generic error message for other errors
+        setSuccessMessage('Duplicate attachments! Please rename your file.');
+      }
     }
   };
 
@@ -90,16 +102,6 @@ const InspectionRequestForm = ({ projectId }) => {
             type="text"
             value={inspectionName}
             onChange={(e) => setInspectionName(e.target.value)}
-            required
-            className="form-control"
-          />
-        </div>
-        <div className="form-group">
-          <label className="form-label">Phase Section:</label>
-          <input
-            type="text"
-            value={phaseSection}
-            onChange={(e) => setPhaseSection(e.target.value)}
             required
             className="form-control"
           />
@@ -121,6 +123,16 @@ const InspectionRequestForm = ({ projectId }) => {
               </option>
             ))}
           </select>
+        </div>
+        <div className="form-group">
+          <label className="form-label">Phase Section:</label>
+          <input
+            type="text"
+            value={phaseSection}
+            onChange={(e) => setPhaseSection(e.target.value)}
+            required
+            className="form-control"
+          />
         </div>
         <div className="form-group">
           <label className="form-label">Construction Type:</label>

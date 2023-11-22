@@ -1,3 +1,20 @@
+.admin-top{
+  display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.5);
+    width: 95%;
+    height: 150px;
+    border-radius: 10px;
+    background-color: black;
+    position: fixed;
+    bottom: 0;
+    top: 10px;
+    left: 50%;
+    transform: translate(-50%);
+    z-index: 10000;
+}
 
 .admin-container {
     width: 95%;
@@ -8,6 +25,7 @@
     background-color: #efefef;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     margin-top: 50px;
+    margin-bottom: 50px;
 
   }
   

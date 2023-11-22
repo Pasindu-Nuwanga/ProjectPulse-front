@@ -27,6 +27,7 @@
 
 .image{
     display: flex;
+    margin-left: 20px;
 }
 
 .image img{

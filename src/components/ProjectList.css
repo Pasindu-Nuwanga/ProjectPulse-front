@@ -2,6 +2,8 @@
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
+    padding-bottom: 60px;
+    margin-top: 50px;
     border: 1px solid #ddd;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -51,12 +53,13 @@
   }
   
   .projects-list button.edit {
-    background-color: black;
+    background-color: #007BFF;
+    border-radius: 20px;
     width: 100%;
   }
 
   .projects-list button.edit:hover {
-    background-color: #62A404;
+    background-color: #0052aa;
   }
 
 

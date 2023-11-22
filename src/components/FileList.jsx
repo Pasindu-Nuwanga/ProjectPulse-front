@@ -50,6 +50,8 @@ const FileList = ({ projectId, role }) => {
       document.body.appendChild(link);
       link.click();
       setDownloadMessage('File downloaded successfully!');
+      // Reset the success message after a few seconds
+      setTimeout(() => setDownloadMessage(''), 5000);
     })
     .catch(error => {
       console.error('Error downloading file:', error);
@@ -67,6 +69,9 @@ const FileList = ({ projectId, role }) => {
           // ... (your existing delete code)
           setDownloadMessage(null); // Clear the download message when a delete occurs
           setDeleteMessage('File deleted successfully!');
+
+        // Reload the current web page
+        window.location.reload();
         })
         .catch(error => {
           console.error('Error deleting file:', error);

@@ -35,7 +35,7 @@ const PhaseForm = () => {
       console.log('Phase created:', response.data);
       // Set the success message upon successful phase creation
       setSuccessMessage('Phase created successfully!');
-      // You may also want to clear the success message after a certain period of time
+      setTimeout(() => setSuccessMessage(''), 5000);
 
       // Optionally, reset the form fields after successful submission
       setPhaseName('');

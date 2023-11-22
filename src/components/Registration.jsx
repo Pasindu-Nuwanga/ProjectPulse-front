@@ -15,7 +15,7 @@ function Registration() {
   const [projects, setProjects] = useState([]);
 
   const roles = [
-    { id: 1, name: "Admin" },
+    // { id: 1, name: "Admin" },
     { id: 2, name: "Site Manager" },
     { id: 3, name: "Site Engineer" },
     { id: 4, name: "QA Engineer" },
@@ -61,11 +61,26 @@ function Registration() {
       if (response.status === 200) {
         setSuccess("Registration was successful!");
         setError("");
+
+        setTimeout(() => {
+          setSuccess(null);
+          }, 5000);
       }
+
     } catch (err) {
       setError("Registration failed. Please try again.");
       setSuccess("");
+
+      setTimeout(() => {
+        setError(null);
+        }, 5000);
     }
+
+    setFirstName('');
+    setLastName('');
+    setEmail('');
+    setPassword('');
+
   };
 
   return (

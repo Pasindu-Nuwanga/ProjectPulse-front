@@ -46,7 +46,10 @@ const FileUpload = ({projectId}) => {
       .then(response => {
         console.log('File uploaded successfully:', response.data);
         setUploadMessage('File uploaded successfully!');
-        // Optionally, you can perform some action after successful upload
+        
+        setTimeout(() => setUploadMessage(''), 5000);
+        
+        setSelectedPhase('');
       })
       .catch(error => {
         console.error('Error uploading file:', error);
