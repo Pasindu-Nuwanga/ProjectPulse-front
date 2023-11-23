@@ -77,12 +77,12 @@
     background-color: #62A404;
   }
   
-  .error-message {
+  .reg-error-message {
     color: #ff0000;
     margin-top: 10px;
   }
   
-  .success-message {
+  .reg-success-message {
     color: #e1fa00;
     margin-top: 10px;
   }

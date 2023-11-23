@@ -10,6 +10,7 @@ const InspectionRequestForm = ({ projectId }) => {
   const [constructionType, setConstructionType] = useState('');
   const [fileAttachment, setFileAttachment] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
   
   
   const [inspectionDate, setInspectionDate] = useState(
@@ -57,7 +58,7 @@ const InspectionRequestForm = ({ projectId }) => {
     formData.append('fileAttachment', fileAttachment);
     formData.append('inspectionRequestDate', new Date(inspectionRequestDate).toISOString());
     formData.append('inspectionDate', new Date(inspectionDate).toISOString());
-
+  
     try {
       const response = await axios.post('http://localhost:8090/inspection/request', formData, {
         headers: {
@@ -67,30 +68,35 @@ const InspectionRequestForm = ({ projectId }) => {
       console.log('Inspection is requested:', response.data);
       // Set the success message upon successful phase creation
       setSuccessMessage('Inspection was requested successfully!');
-      // You may also want to clear the success message after a certain period of time
-
       // Optionally, reset the form fields after successful submission
       setInspectionName('');
       setPhaseSection('');
       setSelectedPhase('');
       setConstructionType('');
-
+  
+      // Clear success message after a certain period of time
       setTimeout(() => {
         setSuccessMessage(null);
-        }, 5000);
-
-    } catch (error) {
-      console.error('Error creating inspection:', error);
-      // Handle error, e.g., show an error message to the user
-      if (error.response && error.response.status === 500 && error.response.data === 'Duplicate attachments! Please rename your file.') {
-        // Set the error message for duplicate attachments
-        setSuccessMessage('Duplicate attachments! Please rename your file.');
+      }, 5000);
+  
+    } catch (err) {
+      if (err.response && err.response.status === 500 && err.response.data.message === "A file with the same name already exists in this phase.") {
+        setErrorMessage("Duplcate file name! Please attach your file with another name");
+      } 
+      else if (err.response && err.response.status === 500 && err.response.data.message === "An inspection with the same name already exists in this phase.") {
+        setErrorMessage("Duplcate inspection name is used! Please try another name for inspection name");
       } else {
-        // Set a generic error message for other errors
-        setSuccessMessage('Duplicate attachments! Please rename your file.');
+        // Set a generic error message for non-500 errors
+        setErrorMessage("An unexpected error occurred. Please try again.");
+        console.error(err);
       }
+
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 5000);
     }
   };
+  
 
   return (
     <div className="inspection-form-container">
@@ -168,6 +174,10 @@ const InspectionRequestForm = ({ projectId }) => {
       </form>
       {successMessage && (
         <div className="inspection-request-success-message">{successMessage}</div>
+      )}
+
+      {errorMessage && (
+        <div className="inspection-request-success-message">{errorMessage}</div>
       )}
     </div>
   );

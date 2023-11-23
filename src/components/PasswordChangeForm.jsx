@@ -68,7 +68,9 @@ const PasswordChangeForm = () => {
       <button className="change-password-btn" onClick={handleChangePassword}>
         Change Password
       </button>
-      <div className="message">{message}</div>
+      <div className={`message ${message.includes('successfully') ? 'success' : 'error'}`}>
+        {message}
+      </div>
     </div>
   );
 };

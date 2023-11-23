@@ -66,7 +66,7 @@ const FileList = ({ projectId, role }) => {
     if (shouldDelete) {
       axios.delete(`http://localhost:8090/deleteFile/${documentId}`)
         .then(response => {
-          // ... (your existing delete code)
+         
           setDownloadMessage(null); // Clear the download message when a delete occurs
           setDeleteMessage('File deleted successfully!');
 
@@ -80,7 +80,6 @@ const FileList = ({ projectId, role }) => {
         });
     }
   };  
-  
 
   return (
     <div className="file-list-container">
@@ -110,6 +109,7 @@ const FileList = ({ projectId, role }) => {
           {files.map((file) => (
             <tr key={file.documentName}>
               <td className='file-name'>{file.documentName}</td>
+
               <td>
                 <button
                   onClick={() => handleDownload(file.documentId, file.documentName)}

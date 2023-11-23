@@ -6,6 +6,7 @@ const FileUpload = ({projectId}) => {
   const [file, setFile] = useState(null);
   const [phases, setPhases] = useState([]);
   const [selectedPhase, setSelectedPhase] = useState('');
+  
   const [uploadMessage, setUploadMessage] = useState('');
   
   
@@ -47,9 +48,10 @@ const FileUpload = ({projectId}) => {
         console.log('File uploaded successfully:', response.data);
         setUploadMessage('File uploaded successfully!');
         
-        setTimeout(() => setUploadMessage(''), 5000);
-        
+        const timeoutId = setTimeout(() => setUploadMessage(''), 5000);
         setSelectedPhase('');
+
+        return () => clearTimeout(timeoutId);
       })
       .catch(error => {
         console.error('Error uploading file:', error);

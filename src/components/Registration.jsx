@@ -154,8 +154,8 @@ function Registration() {
             Register
           </button>
     
-          {error && <div className="error-message">{error}</div>}
-          {success && <div className="success-message">{success}</div>}
+          {error && <div className="reg-error-message">{error}</div>}
+          {success && <div className="reg-success-message">{success}</div>}
         </form>
       </div>
     </div>

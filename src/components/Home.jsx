@@ -2,7 +2,7 @@ import Navbar from "../components/Navbar";
 import Footer from "./Footer";
 import Open from "./Open";
 
-function Home({roleName, username, projectName}) {
+function Home({roleName, username, projectName, projectId}) {
     return (
       <>
        <Navbar roleName={roleName} username={username}/>
