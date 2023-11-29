@@ -10,7 +10,6 @@ const FileList = ({ projectId, role }) => {
   const [deleteMessage, setDeleteMessage] = useState(null);
 
   useEffect(() => {
-    // Fetch phases based on the selected project ID
     const projectId = localStorage.getItem('projectId');
     axios.get(`http://localhost:8090/api/projects/${projectId}/phases`)
       .then(response => {
@@ -22,7 +21,6 @@ const FileList = ({ projectId, role }) => {
   }, [projectId]);
 
   useEffect(() => {
-    // Fetch files based on the selected phase ID
     if (selectedPhase) {
       axios.get(`http://localhost:8090/api/phases/${selectedPhase}/documents`)
         .then(response => {
@@ -38,26 +36,25 @@ const FileList = ({ projectId, role }) => {
     const shouldDownload = window.confirm(`Are you sure you want to download the file '${documentName}'?`);
 
     if (shouldDownload) {
-    const downloadUrl = `http://localhost:8090/downloadFile/${documentId}`;
-    axios.get(downloadUrl, {
-      responseType: 'blob',
-    })
-    .then(response => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', documentName);
-      document.body.appendChild(link);
-      link.click();
-      setDownloadMessage('File downloaded successfully!');
-      // Reset the success message after a few seconds
-      setTimeout(() => setDownloadMessage(''), 5000);
-    })
-    .catch(error => {
-      console.error('Error downloading file:', error);
-      setDownloadMessage('Error downloading file. Please try again.');
-    });
-   }
+      const downloadUrl = `http://localhost:8090/downloadFile/${documentId}`;
+      axios.get(downloadUrl, {
+        responseType: 'blob',
+      })
+      .then(response => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', documentName);
+        document.body.appendChild(link);
+        link.click();
+        setDownloadMessage('File downloaded successfully!');
+        setTimeout(() => setDownloadMessage(''), 5000);
+      })
+      .catch(error => {
+        console.error('Error downloading file:', error);
+        setDownloadMessage('Error downloading file. Please try again.');
+      });
+    }
   };
 
   const handleDelete = (documentId, documentName) => {
@@ -66,17 +63,14 @@ const FileList = ({ projectId, role }) => {
     if (shouldDelete) {
       axios.delete(`http://localhost:8090/deleteFile/${documentId}`)
         .then(response => {
-         
-          setDownloadMessage(null); // Clear the download message when a delete occurs
+          setDownloadMessage(null);
           setDeleteMessage('File deleted successfully!');
-
-        // Reload the current web page
-        window.location.reload();
+          window.location.reload();
         })
         .catch(error => {
           console.error('Error deleting file:', error);
           setDeleteMessage('Error deleting file. Please try again.');
-          setDownloadMessage(null); // Clear the download message if there was an error deleting
+          setDownloadMessage(null);
         });
     }
   };  
@@ -104,33 +98,43 @@ const FileList = ({ projectId, role }) => {
       </div>
       
       <div className='table-background'>
-      <table className="file-list-table">
-        <tbody>
-          {files.map((file) => (
-            <tr key={file.documentName}>
-              <td className='file-name'>{file.documentName}</td>
+        <table className="file-list-table">
+          <tbody>
+            {files.map((file) => (
+              <tr key={file.documentName}>
+                <td className='file-info'>
+                  <div className="file-name">{file.documentName}</div>
+                </td>
 
-              <td>
-                <button
-                  onClick={() => handleDownload(file.documentId, file.documentName)}
-                  className="file-list-btn file-list-btn-download"
-                >
-                  <i className='fas fa-download'/>
-                </button>
-              </td>
-              {(role === 4 &&<td>
-                <button
-                  onClick={() => handleDelete(file.documentId, file.documentName)}
-                  className="file-list-btn file-list-btn-delete"
-                >
-                <i className='fas fa-trash'/>
-                </button>
-              </td>)}
-              <hr/>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                <td>
+                   <div className="file-upload-date">
+                    <span>Upload Date:</span> {new Date(file.uploadDate).toLocaleString()}
+                  </div>
+                </td>
+
+                <td>
+                  <button
+                    onClick={() => handleDownload(file.documentId, file.documentName)}
+                    className="file-list-btn file-list-btn-download"
+                  >
+                    <i className='fas fa-download'/>
+                  </button>
+                </td>
+                {(role === 4 && 
+                  <td>
+                    <button
+                      onClick={() => handleDelete(file.documentId, file.documentName)}
+                      className="file-list-btn file-list-btn-delete"
+                    >
+                      <i className='fas fa-trash'/>
+                    </button>
+                  </td>
+                )}
+                <hr/>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       {downloadMessage && (

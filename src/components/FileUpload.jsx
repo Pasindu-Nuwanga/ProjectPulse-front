@@ -2,17 +2,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "./FileUpload.css";
 
-const FileUpload = ({projectId}) => {
+const FileUpload = ({ projectId }) => {
   const [file, setFile] = useState(null);
   const [phases, setPhases] = useState([]);
   const [selectedPhase, setSelectedPhase] = useState('');
-  
   const [uploadMessage, setUploadMessage] = useState('');
-  
-  
+  const [alertMessage, setAlertMessage] = useState('');
+  const [uploadDate, setUploadDate] = useState(new Date().toISOString());
 
   useEffect(() => {
-    // Fetch phases based on the selected project ID
     const projectId = localStorage.getItem('projectId');
     axios.get(`http://localhost:8090/api/projects/${projectId}/phases`)
       .then(response => {
@@ -38,6 +36,8 @@ const FileUpload = ({projectId}) => {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('phaseName', selectedPhase);
+    formData.append('uploadDate', uploadDate);
+    formData.append('alertMessage', alertMessage);
 
     axios.post('http://localhost:8090/uploadFile', formData, {
       headers: {
@@ -47,8 +47,14 @@ const FileUpload = ({projectId}) => {
       .then(response => {
         console.log('File uploaded successfully:', response.data);
         setUploadMessage('File uploaded successfully!');
-        
-        const timeoutId = setTimeout(() => setUploadMessage(''), 5000);
+        setAlertMessage(response.data.alertMessage);
+        setUploadDate(response.data.uploadDate);
+
+        const timeoutId = setTimeout(() => {
+          setUploadMessage('');
+          setAlertMessage('');
+          setUploadDate(new Date().toISOString());
+        }, 5000);
         setSelectedPhase('');
 
         return () => clearTimeout(timeoutId);
@@ -64,15 +70,16 @@ const FileUpload = ({projectId}) => {
       <h2>Upload Files</h2>
 
       {uploadMessage && <div className="alert-alert-info mt-2">{uploadMessage}</div>}
-      
+
       <form onSubmit={onFormSubmit} className="file-upload-form">
-      <div className="mb-3">
+
+        <div className="mb-3">
           <label>Select Phase:</label>
           <select
             value={selectedPhase}
             onChange={(e) => setSelectedPhase(e.target.value)}
             required
-            className="form-select" 
+            className="form-select"
           >
             <option value="" disabled>
               Select a phase
@@ -84,17 +91,38 @@ const FileUpload = ({projectId}) => {
             ))}
           </select>
         </div>
+
         <div className="mb-3">
           <label htmlFor="file" className="form-label">
             Choose File
           </label>
           <input type="file" className="form-control" id="file" onChange={onFileChange} />
         </div>
-        
-        <button type="submit" className="btn btn-primary">
+
+        <div className="mb-3">
+          <label htmlFor="alertMessage" className="form-label">
+            Alert Message
+          </label>
+          <input
+            type="text"
+            id="alertMessage"
+            className="form-control"
+            value={alertMessage}
+            onChange={(e) => setAlertMessage(e.target.value)}
+          />
+        </div>
+
+        {/* Display uploadDate */}
+      <div className="mb-3">
+        <strong>Upload Date:</strong> {new Date(uploadDate).toLocaleString()}
+      </div>
+
+        <button type="submit" className="file-upload-btn">
           Upload
         </button>
       </form>
+
+      
     </div>
   );
 };
